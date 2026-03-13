@@ -1,3 +1,5 @@
+> 🚧 **Work in Progress:** Documentation is still being written and some pages may be incomplete.
+> 
 > Looking for detailed descriptions of every toggle / tweak?
 > See the full **Feature Reference** here: **[features.md](features.md)**  
 > (Includes registry keys, value names, recommended values, undo values, and plugin notes.)
@@ -12,7 +14,8 @@ Quick links:
 1. Open **Winslop.exe**
 2. Use the **tabs** to switch between areas:
    - **Windows**: system tweaks (feature tree)
-   - **Applications**: app scan/uninstall (if enabled in your build)
+   - **Apps**: app debloater (scan installed apps and remove selected ones)
+   - **Install**: install apps via winget
    - **Tools**: additional modules/extensions
 
 3. Use **Inspect system** to scan/analyze.
@@ -21,26 +24,59 @@ Quick links:
 
 ---
 
-## UI overview
+### Interface guide
 
-<img width="1031" height="880" alt="Winslop_annotated_outside_EN_v3" src="https://github.com/user-attachments/assets/f661f0ee-b87b-401e-9121-f48addc38fe3" />
+Below is a quick overview of the Winslop interface.
+
+<img width="455" height="656" alt="Winslop_annotated_outside_EN_v3" src="https://github.com/user-attachments/assets/63187411-e783-4cca-9bb8-5fc38438e21f" />
+
 
 ### Top bar
 - **Start button (☰)**  
-  Opens the main menu (selection actions, import/export, plugins, etc. depending on your build).
+Opens the main menu (selection actions, plugin/extension management, logs — varies by build).
 - **Search**  
-  Filters the current view (e.g., feature tree).  
+  Filters the current view (e.g., windows/feature;apps tree).  
   Tip: clear the search to show all items again.
 - **Refresh**  
 Updates the view and clears the log in the log window.
 
+### Profile selector
+
+- **Select profile… (dropdown)**  
+  Loads a preset selection of tweaks/actions (a “profile”).  
+  Use this to quickly apply a known configuration without manually checking every item.
+
+  **Typical usage:**
+  1. Choose a profile from the dropdown
+  2. Click **Inspect system** (optional but recommended)
+  3. Click **Apply selected changes**
+
+  **Notes:**
+  - Switching profiles usually updates which items are checked in the tree.
+  - Available profiles depend on your build / included profiles.
+  - You can export your current checked items to a simple `.sel` text file.
+  - You can import a `.sel` file to restore a selection quickly.
+
+Some builds also support auto-loading `selection.sel` from the same folder as the executable (opt-in prompt).
+
 ### Tabs
 - **Windows**  
   Shows the feature/plugin tree. Items are grouped (e.g., *Issues*, *System*, *MS Edge*, *Privacy*…).
-- **Applications**  
+- **Apps**  
   Scans installed apps and allows uninstalling selected ones (if present).
+- **Install** (winget)
+Installs applications using winget.
+
+  **Typical flow:**
+   1. Search/browse available winget apps (depends on your UI)
+   2. Select what you want to install
+   3. Apply selected changes (install)
+ 
+_Note: Application list parsed and adapted from the [WinUtil project by Chris Titus Tech](https://github.com/ChrisTitusTech/winutil)_
+
 - **Tools**  
-  Hosts extension views/modules.
+Extra modules and extension views live here.
+What you see depends on which extensions are included/installed.
 
 ### Feature tree (Windows tab)
 - Checkboxes represent individual tweaks.  
@@ -82,16 +118,6 @@ Right-click any node in the **Windows** feature tree to open the context menu:
   Applies all currently checked items in the active tab (e.g., apply tweaks / uninstall selected apps).
 ---
 
-## Selection import/export (optional)
-
-If your build includes selection transfer:
-- You can export your current checked items to a simple `.sel` text file.
-- You can import a `.sel` file to restore a selection quickly.
-
-Some builds also support auto-loading `selection.sel` from the same folder as the executable (opt-in prompt).
-
----
-
 ## Notes / Safety
 
 This tool changes Windows settings. Use **Inspect** first, review what is checked, then **Apply**.
@@ -102,11 +128,11 @@ Some changes may require sign-out or restart to fully take effect.
 ## FAQ
 
 <details>
-<summary><strong>What’s the easiest way to share or restore my selections?</strong></summary>
+  <summary><strong>What’s the easiest way to share or restore my selections?</strong></summary>
 
-Use the new **Export/Import** feature for TreeList selections.
+  Use the new <strong>Export/Import</strong> feature for TreeList selections.
 
-If you place **`winslop-selection.sel`** in the same folder as **`Winslop.exe`**, Winslop will detect it automatically and offer an import.
+  <p><em>Note:</em> Placing <code>winslop-selection.sel</code> next to <code>Winslop.exe</code> was how this worked in older builds. Newer versions use the Export/Import flow (and will guide you through importing the file).</p>
 </details>
 
 <details>
