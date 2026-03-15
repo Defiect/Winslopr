@@ -31,10 +31,12 @@ namespace Winslop
 
             _logActions = new LogActions(rtbLogger);
 
-            // Lazy-load tab content when user switches tabs
-            tabControl.SelectedIndexChanged += (s, e) => EnsureTabLoaded(tabControl.SelectedTab);
-            // Update action buttons when user switches tabs
-            tabControl.SelectedIndexChanged += (s, e) => UpdateActionButtons();
+            // Lazy-load tab content and update action buttons when user switches tabs
+            tabControl.SelectedIndexChanged += (s, e) =>
+            {
+                EnsureTabLoaded(tabControl.SelectedTab);
+                UpdateActionButtons();
+            };
         }
 
         private async void MainForm_Shown(object sender, EventArgs e)
@@ -51,12 +53,10 @@ namespace Winslop
             _logActionsController = new LogActionsController(comboLogActions, _logActions);
 
             // Set app version information
-            lblRightHeader.Text = $"{Program.GetAppVersion()}";
+            lblRightHeader.Text = $"v{Program.GetAppVersion()}";
             var windowsTab = tabControl.TabPages["Windows"];
             if (windowsTab == null)
                 return;
-
-            windowsTab.Text = "Checking local configuration mode...";
             windowsTab.Text = WindowsVersion.GetDisplayString();
 
             // Ensure initial tab content exists

@@ -99,7 +99,7 @@
             // btnUninstall
             // 
             this.btnUninstall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnUninstall.Location = new System.Drawing.Point(187, 328);
+            this.btnUninstall.Location = new System.Drawing.Point(375, 328);
             this.btnUninstall.Name = "btnUninstall";
             this.btnUninstall.Size = new System.Drawing.Size(75, 23);
             this.btnUninstall.TabIndex = 344;
@@ -111,12 +111,12 @@
             this.chkInstalledOnly.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkInstalledOnly.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkInstalledOnly.AutoEllipsis = true;
-            this.chkInstalledOnly.ForeColor = System.Drawing.Color.Navy;
-            this.chkInstalledOnly.Location = new System.Drawing.Point(268, 328);
+            this.chkInstalledOnly.ForeColor = System.Drawing.Color.Black;
+            this.chkInstalledOnly.Location = new System.Drawing.Point(187, 328);
             this.chkInstalledOnly.Name = "chkInstalledOnly";
             this.chkInstalledOnly.Size = new System.Drawing.Size(85, 23);
             this.chkInstalledOnly.TabIndex = 345;
-            this.chkInstalledOnly.Text = "Installed only";
+            this.chkInstalledOnly.Text = "Installed";
             this.chkInstalledOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chkInstalledOnly.UseVisualStyleBackColor = true;
             // 
@@ -125,10 +125,10 @@
             this.chkUpgradesOnly.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkUpgradesOnly.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkUpgradesOnly.AutoEllipsis = true;
-            this.chkUpgradesOnly.ForeColor = System.Drawing.Color.Navy;
-            this.chkUpgradesOnly.Location = new System.Drawing.Point(359, 328);
+            this.chkUpgradesOnly.ForeColor = System.Drawing.Color.Black;
+            this.chkUpgradesOnly.Location = new System.Drawing.Point(275, 328);
             this.chkUpgradesOnly.Name = "chkUpgradesOnly";
-            this.chkUpgradesOnly.Size = new System.Drawing.Size(78, 23);
+            this.chkUpgradesOnly.Size = new System.Drawing.Size(95, 23);
             this.chkUpgradesOnly.TabIndex = 346;
             this.chkUpgradesOnly.Text = "Upgradeable";
             this.chkUpgradesOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

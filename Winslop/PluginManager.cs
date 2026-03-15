@@ -87,7 +87,7 @@ public static class PluginManager
         }
 
         treeView.Nodes.Add(pluginsNode);
-        treeView.ExpandAll();
+        pluginsNode.Expand();
     }
 
     /// 3. Parse the [Commands] section from plugin content.

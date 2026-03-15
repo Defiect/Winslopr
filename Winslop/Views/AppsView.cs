@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Windows.Foundation;
-using Windows.Management.Deployment;
 using Winslop.Properties;
 
 namespace Winslop.Views
@@ -53,7 +53,7 @@ namespace Winslop.Views
             comboDisplayMode.DropDownStyle = ComboBoxStyle.DropDownList;
             comboDisplayMode.SelectedIndex = 0;
 
-         //   comboDisplayMode.SelectedIndexChanged += async (s, e) => await AnalyzeAsync();
+            //   comboDisplayMode.SelectedIndexChanged += async (s, e) => await AnalyzeAsync();
         }
 
         private AppDisplayMode SelectedMode
@@ -81,6 +81,7 @@ namespace Winslop.Views
         public async Task AnalyzeAsync()
         {
             checkedListBoxApps.Items.Clear();
+            checkedListBoxApps.Items.Add("Scanning installed apps, please wait...");
             _fullNameToName.Clear();
 
             // Load plugin and built-in patterns once.
@@ -284,25 +285,47 @@ namespace Winslop.Views
         }
 
         /// <summary>
-        /// Loads all installed Store apps using PackageManager.
+        /// Loads all installed Store apps using PowerShell Get-AppxPackage.
         /// Returns dictionary: appName > fullName.
         /// </summary>
         private static async Task<Dictionary<string, string>> LoadAppsAsync()
         {
             Dictionary<string, string> dir = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            PackageManager pm = new PackageManager();
-            var packages = await Task.Run(() =>
-                pm.FindPackagesForUserWithPackageTypes(string.Empty, PackageTypes.Main));
-
-            foreach (var p in packages)
+            await Task.Run(() =>
             {
-                string name = p.Id.Name;
-                string fullName = p.Id.FullName;
+                try
+                {
+                    var initialSessionState = InitialSessionState.CreateDefault();
 
-                if (!dir.ContainsKey(name))
-                    dir[name] = fullName;
-            }
+                    using (var runspace = RunspaceFactory.CreateRunspace(initialSessionState))
+                    {
+                        runspace.Open();
+                        using (var ps = PowerShell.Create())
+                        {
+                            ps.Runspace = runspace;
+                            ps.AddCommand("Get-AppxPackage");
+                            var results = ps.Invoke();
+
+                            foreach (var result in results)
+                            {
+                                string name = result.Properties["Name"]?.Value?.ToString();
+                                string fullName = result.Properties["PackageFullName"]?.Value?.ToString();
+
+                                if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(fullName))
+                                {
+                                    if (!dir.ContainsKey(name))
+                                        dir[name] = fullName;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(string.Format("Error loading apps: {0}", ex.Message), LogLevel.Warning);
+                }
+            });
 
             Logger.Log(string.Format("(Checked against {0} apps from the system)", dir.Count));
             return dir;
@@ -386,53 +409,56 @@ namespace Winslop.Views
             Logger.Log("");
         }
 
-        /// <summary>
-        /// Uninstall a Store app by full package name.
-        /// </summary>
-        private static async Task<bool> UninstallAppAsync(string fullName)
-        {
-            try
-            {
-                PackageManager pm = new PackageManager();
-                var op = pm.RemovePackageAsync(fullName);
-
-                // Await WinRT async operation without ManualResetEvent.
-                await op.AsTask();
-
-                if (op.Status == AsyncStatus.Completed)
-                {
-                    Logger.Log(string.Format("Successfully uninstalled app: {0}", fullName));
-                    return true;
-                }
-
-                Logger.Log(string.Format("Failed to uninstall app: {0}", fullName), LogLevel.Warning);
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(string.Format("Error uninstalling app {0}: {1}", fullName, ex.Message), LogLevel.Warning);
-                return false;
-            }
-        }
 
         /// <summary>
-        /// Uninstalls selected apps and returns those removed successfully.
+        /// Uninstalls selected apps using a single shared PowerShell Runspace
+        /// and returns those removed successfully.
         /// </summary>
         private static async Task<List<string>> UninstallSelectedAppsAsync(List<string> selectedApps)
         {
             List<string> removed = new List<string>();
 
-            for (int i = 0; i < selectedApps.Count; i++)
+            await Task.Run(() =>
             {
-                string fullName = selectedApps[i];
-                Logger.Log(string.Format("🗑️ Removing app: {0}...", fullName));
+                var initialSessionState = InitialSessionState.CreateDefault();
 
-                if (await UninstallAppAsync(fullName))
-                    removed.Add(fullName);
-            }
+                using (var runspace = RunspaceFactory.CreateRunspace(initialSessionState))
+                {
+                    runspace.Open();
 
-            for (int i = 0; i < removed.Count; i++)
-                Logger.Log(string.Format("🗑️ Removed Store App: {0}", removed[i]));
+                    for (int i = 0; i < selectedApps.Count; i++)
+                    {
+                        string fullName = selectedApps[i];
+                        Logger.Log(string.Format("🗑️ Removing app: {0}...", fullName));
+
+                        try
+                        {
+                            using (var ps = PowerShell.Create())
+                            {
+                                ps.Runspace = runspace;
+                                ps.AddCommand("Remove-AppxPackage")
+                                  .AddParameter("Package", fullName);
+                                ps.Invoke();
+
+                                if (ps.HadErrors)
+                                {
+                                    foreach (var err in ps.Streams.Error)
+                                        Logger.Log(string.Format("Failed to uninstall app {0}: {1}", fullName, err.ToString()), LogLevel.Warning);
+                                }
+                                else
+                                {
+                                    Logger.Log(string.Format("🗑️ Removed Store App: {0}", fullName));
+                                    removed.Add(fullName);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(string.Format("Error uninstalling app {0}: {1}", fullName, ex.Message), LogLevel.Warning);
+                        }
+                    }
+                }
+            });
 
             List<string> failed = selectedApps.Except(removed).ToList();
             for (int i = 0; i < failed.Count; i++)

@@ -29,6 +29,11 @@ namespace Winslop.Views
 
         private bool _isBusy;
 
+        // Base texts for checkboxes to which counts will be appended
+        private const string InstalledOnlyLabel = "Installed";
+
+        private const string UpgradeableLabel = "Upgradeable";
+
         public InstallView()
         {
             InitializeComponent();
@@ -120,6 +125,7 @@ namespace Winslop.Views
                     a.IsInstalled = _installedIds.Contains(a.WingetId);
                     a.HasUpgrade = _upgradeIds.Contains(a.WingetId);
                 }
+                UpdateCheckboxCounts(); // Update counts in filter checkboxes
 
                 Logger.Log("Analyze finished.", LogLevel.Info);
 
@@ -180,6 +186,26 @@ namespace Winslop.Views
                 SetBusy(false);
                 await AnalyzeAsync();
             }
+        }
+
+        // Count and display the number of installed and upgradable apps in the respective filter checkboxes.
+        private void UpdateCheckboxCounts()
+        {
+            int installedCount = _allApps.Count(a => a.IsInstalled);
+            int updatesCount = _allApps.Count(a => a.IsInstalled && a.HasUpgrade);
+
+            // Always show counts
+            chkInstalledOnly.Text = $"{InstalledOnlyLabel} ({installedCount})";
+            chkUpgradesOnly.Text = $"{UpgradeableLabel} ({updatesCount})";
+
+            // Upgradeable (show count only if > 0) + color hint
+            chkUpgradesOnly.Text = updatesCount > 0
+                ? $"{UpgradeableLabel} ({updatesCount})"
+                : UpgradeableLabel;
+
+            chkUpgradesOnly.ForeColor = updatesCount > 0
+                ? System.Drawing.Color.OrangeRed
+                : System.Drawing.Color.Black;
         }
 
         // ---------------- Filtering / Rendering ----------------

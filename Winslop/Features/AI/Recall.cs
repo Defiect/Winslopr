@@ -16,6 +16,16 @@ namespace Settings.AI
             return $"{keyName} | Value: {valueName} | Recommended: {recommendedValue} (Recall off – protect your privacy, prevent AI from accessing personal data)";
         }
 
+        public override bool IsApplicable()
+        {
+            // This feature is intended for Windows 11 only.
+            return WindowsVersion.IsWindows11OrLater();
+        }
+
+        public override string InapplicableReason()
+        {
+            return "Windows 11 only";
+        }
 
         public override string ID()
         {
@@ -26,7 +36,6 @@ namespace Settings.AI
         {
             return ID();
         }
-
 
         public override Task<bool> CheckFeature()
         {

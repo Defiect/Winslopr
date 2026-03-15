@@ -21,7 +21,6 @@ namespace Winslop.Views
         public FeaturesView()
         {
             InitializeComponent();
-            InitializeAppState();
         }
 
         private void FeaturesView_Load(object sender, EventArgs e)

@@ -29,14 +29,14 @@ namespace Settings.Gaming
 
         public override Task<bool> CheckFeature()
         {
-            return Task.FromResult(Utils.IntEquals(keyName, valueName, 0));
+            return Task.FromResult(Utils.IntEquals(keyName, valueName, recommendedValue));
         }
 
         public override Task<bool> DoFeature()
         {
             try
             {
-                Registry.SetValue(keyName, valueName, 0, Microsoft.Win32.RegistryValueKind.DWord);
+                Registry.SetValue(keyName, valueName, recommendedValue, Microsoft.Win32.RegistryValueKind.DWord);
 
                 return Task.FromResult(true);
             }
@@ -52,7 +52,7 @@ namespace Settings.Gaming
         {
             try
             {
-                Registry.SetValue(keyName, valueName, 2, Microsoft.Win32.RegistryValueKind.DWord);
+                Registry.SetValue(keyName, valueName, 0, Microsoft.Win32.RegistryValueKind.DWord); // Default is 0 (Let Windows choose)
 
                 return true;
             }

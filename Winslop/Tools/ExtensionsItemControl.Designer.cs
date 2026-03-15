@@ -61,9 +61,9 @@
             this.labelDescription.AutoEllipsis = true;
             this.labelDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
             this.labelDescription.ForeColor = System.Drawing.Color.Black;
-            this.labelDescription.Location = new System.Drawing.Point(9, 92);
+            this.labelDescription.Location = new System.Drawing.Point(9, 76);
             this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(308, 59);
+            this.labelDescription.Size = new System.Drawing.Size(308, 75);
             this.labelDescription.TabIndex = 24;
             this.labelDescription.Text = "Description";
             this.labelDescription.UseCompatibleTextRendering = true;
@@ -90,7 +90,7 @@
             this.btnRun.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRun.ForeColor = System.Drawing.Color.White;
-            this.btnRun.Location = new System.Drawing.Point(220, 43);
+            this.btnRun.Location = new System.Drawing.Point(230, 32);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(97, 23);
             this.btnRun.TabIndex = 1;

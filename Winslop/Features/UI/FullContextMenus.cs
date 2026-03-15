@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
-using Winslop;
 using System.Threading.Tasks;
+using Winslop;
 
 namespace Settings.Personalization
 {

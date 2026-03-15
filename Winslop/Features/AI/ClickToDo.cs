@@ -22,6 +22,17 @@ namespace Settings.UI
                    "Note: This setting only applies on Copilot+ PCs with Windows 11 24H2 or newer.";
         }
 
+        public override bool IsApplicable()
+        {
+            // This feature is intended for Windows 11 only.
+            return WindowsVersion.IsWindows11OrLater();
+        }
+
+        public override string InapplicableReason()
+        {
+            return "Windows 11 only";
+        }
+
         public override string ID()
         {
             return "Disable Click to Do (Only Copilot+ PCs)";

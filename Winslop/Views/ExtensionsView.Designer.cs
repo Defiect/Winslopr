@@ -36,14 +36,12 @@
             // 
             // lblStatus
             // 
-            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.AutoEllipsis = true;
             this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblStatus.Font = new System.Drawing.Font("Segoe UI Variable Small Semibol", 10F, System.Drawing.FontStyle.Bold);
-            this.lblStatus.Location = new System.Drawing.Point(206, 11);
+            this.lblStatus.Location = new System.Drawing.Point(80, 3);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(205, 18);
+            this.lblStatus.Size = new System.Drawing.Size(111, 18);
             this.lblStatus.TabIndex = 0;
             this.lblStatus.Text = "Loading...";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -52,31 +50,31 @@
             // 
             // comboFilter
             // 
-            this.comboFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboFilter.BackColor = System.Drawing.Color.White;
             this.comboFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboFilter.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.comboFilter.Font = new System.Drawing.Font("Segoe UI Variable Small Semilig", 8F);
+            this.comboFilter.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.comboFilter.ForeColor = System.Drawing.Color.Black;
             this.comboFilter.FormattingEnabled = true;
-            this.comboFilter.Location = new System.Drawing.Point(433, 6);
+            this.comboFilter.Location = new System.Drawing.Point(3, 3);
             this.comboFilter.Name = "comboFilter";
-            this.comboFilter.Size = new System.Drawing.Size(71, 23);
+            this.comboFilter.Size = new System.Drawing.Size(71, 21);
             this.comboFilter.TabIndex = 351;
             this.comboFilter.TabStop = false;
             this.comboFilter.SelectedIndexChanged += new System.EventHandler(this.comboFilter_SelectedIndexChanged);
             // 
             // listTools
             // 
+            this.listTools.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listTools.BackColor = System.Drawing.SystemColors.Control;
             this.listTools.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listTools.Dock = System.Windows.Forms.DockStyle.Left;
             this.listTools.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.listTools.FormattingEnabled = true;
             this.listTools.ItemHeight = 15;
-            this.listTools.Location = new System.Drawing.Point(0, 0);
+            this.listTools.Location = new System.Drawing.Point(0, 30);
             this.listTools.Name = "listTools";
-            this.listTools.Size = new System.Drawing.Size(200, 527);
+            this.listTools.Size = new System.Drawing.Size(200, 497);
             this.listTools.TabIndex = 352;
             // 
             // detailsControl
@@ -86,9 +84,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.detailsControl.AutoScroll = true;
             this.detailsControl.BackColor = System.Drawing.SystemColors.Control;
-            this.detailsControl.Location = new System.Drawing.Point(203, 33);
+            this.detailsControl.Location = new System.Drawing.Point(203, 0);
             this.detailsControl.Name = "detailsControl";
-            this.detailsControl.Size = new System.Drawing.Size(301, 491);
+            this.detailsControl.Size = new System.Drawing.Size(301, 524);
             this.detailsControl.TabIndex = 353;
             // 
             // ExtensionsView

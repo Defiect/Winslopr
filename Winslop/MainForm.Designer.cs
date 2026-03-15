@@ -152,10 +152,10 @@
             this.tabControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tabControl.Font = new System.Drawing.Font("Segoe UI Variable Display", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl.HotTrack = true;
-            this.tabControl.ItemSize = new System.Drawing.Size(68, 28);
+            this.tabControl.ItemSize = new System.Drawing.Size(30, 28);
             this.tabControl.Location = new System.Drawing.Point(7, 8);
             this.tabControl.Name = "tabControl";
-            this.tabControl.Padding = new System.Drawing.Point(10, 3);
+            this.tabControl.Padding = new System.Drawing.Point(15, 3);
             this.tabControl.SelectedIndex = 0;
             this.tabControl.ShowToolTips = true;
             this.tabControl.Size = new System.Drawing.Size(400, 242);
@@ -326,7 +326,7 @@
             this.lblRightHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblRightHeader.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblRightHeader.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblRightHeader.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRightHeader.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRightHeader.Location = new System.Drawing.Point(325, 526);
             this.lblRightHeader.Name = "lblRightHeader";
             this.lblRightHeader.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
@@ -356,19 +356,22 @@
             // 
             // btnSupport
             // 
-            this.btnSupport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSupport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSupport.AutoEllipsis = true;
             this.btnSupport.BackColor = System.Drawing.Color.Transparent;
             this.btnSupport.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSupport.FlatAppearance.BorderSize = 0;
+            this.btnSupport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnSupport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.WhiteSmoke;
             this.btnSupport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSupport.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSupport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(65)))), ((int)(((byte)(211)))));
-            this.btnSupport.Location = new System.Drawing.Point(12, 525);
+            this.btnSupport.Location = new System.Drawing.Point(284, 526);
             this.btnSupport.Name = "btnSupport";
             this.btnSupport.Size = new System.Drawing.Size(35, 23);
             this.btnSupport.TabIndex = 523;
             this.btnSupport.TabStop = false;
+            this.toolTip.SetToolTip(this.btnSupport, "Support the development");
             this.btnSupport.UseVisualStyleBackColor = false;
             this.btnSupport.Click += new System.EventHandler(this.btnSupport_Click);
             // 

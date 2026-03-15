@@ -33,26 +33,33 @@ namespace Winslop
         {
             // Hide the TreeView to avoid flickering and visible scroll jump
             tree.Visible = false;
+            tree.BeginUpdate();
 
-            var features = FeatureLoader.Load();
-            tree.Nodes.Clear();
-
-            foreach (var feature in features)
-                AddNode(tree.Nodes, feature);
-
-            // root nodes (categories)
-            foreach (TreeNode root in tree.Nodes)
+            try
             {
-                root.NodeFont = new Font(tree.Font, FontStyle.Bold);
-                root.ForeColor = Color.Black; // category color
+                var features = FeatureLoader.Load();
+                tree.Nodes.Clear();
+
+                foreach (var feature in features)
+                    AddNode(tree.Nodes, feature);
+
+                // root nodes (categories)
+                foreach (TreeNode root in tree.Nodes)
+                {
+                    root.NodeFont = new Font(tree.Font, FontStyle.Bold);
+                    root.ForeColor = Color.Black; // category color
+                }
+
+                tree.ExpandAll(); // expand all nodes
+
+                // Ensure the first node is shown at the top (prevents auto-scroll to bottom)
+                if (tree.Nodes.Count > 0) tree.TopNode = tree.Nodes[0];
             }
-
-            tree.ExpandAll(); // expand all nodes
-
-            // Ensure the first node is shown at the top (prevents auto-scroll to bottom)
-            if (tree.Nodes.Count > 0) tree.TopNode = tree.Nodes[0];
-
-            tree.Visible = true;
+            finally
+            {
+                tree.EndUpdate();
+                tree.Visible = true;
+            }
 
             // Ensure top node after finished layout/paint (ExpandAll/Visible can override TopNode)
             tree.BeginInvoke((Action)(() =>
